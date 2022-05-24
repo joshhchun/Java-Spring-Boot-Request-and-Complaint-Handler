@@ -22,4 +22,9 @@ public class RequestController {
     public List<Request> getAllRequests() {
         return requestService.getAllRequests();
     }
-}
+    // DELETE Method
+    @DeleteMapping(path = "{requestId}")
+    public void removeStudent(@PathVariable("requestId") int id) {
+        requestService.removeRequest(id);
+    }
+ }

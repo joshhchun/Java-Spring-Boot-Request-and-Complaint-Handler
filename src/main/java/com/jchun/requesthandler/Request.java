@@ -80,7 +80,6 @@ public class Request {
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
                 ", age=" + age +
                 ", message='" + message + '\'' +
                 '}';

@@ -19,4 +19,15 @@ public class RequestServiceImplement implements RequestService{
     public List<Request> getAllRequests() {
         return requestRepository.findAll();
     }
+
+    // Method to get rid of a request by ID
+    public void removeRequest(int id) {
+        // Making sure the request ID sent exists in database
+        boolean idExists = requestRepository.existsById(id);
+        if (!idExists) {
+            throw new IllegalStateException("Request with that ID does not exist.");
+        }
+        // If exists, delete the ID from the database
+        requestRepository.deleteById(id);
+    }
 }
