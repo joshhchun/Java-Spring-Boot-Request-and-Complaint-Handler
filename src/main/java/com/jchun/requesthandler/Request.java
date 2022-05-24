@@ -21,7 +21,6 @@ public class Request {
     private String type;
     private String name;
     private String email;
-    private LocalDate dateOfBirth;
     private int age;
 
     private String message;
@@ -64,14 +63,6 @@ public class Request {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
 
     public int getAge() {
