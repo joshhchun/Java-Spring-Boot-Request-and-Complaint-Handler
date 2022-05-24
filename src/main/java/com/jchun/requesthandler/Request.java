@@ -17,12 +17,22 @@ public class Request {
             strategy = GenerationType.SEQUENCE,
             generator = "request_sequence"
     )
-    private String type;
     private int id;
+    private String type;
     private String name;
     private String email;
     private LocalDate dateOfBirth;
     private int age;
+
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getType() {
         return type;
@@ -75,12 +85,13 @@ public class Request {
     @Override
     public String toString() {
         return "Request{" +
-                "type='" + type + '\'' +
-                ", id=" + id +
+                "id=" + id +
+                ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", age=" + age +
+                ", message='" + message + '\'' +
                 '}';
     }
 }

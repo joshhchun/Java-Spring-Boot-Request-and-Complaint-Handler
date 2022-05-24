@@ -2,6 +2,7 @@ package com.jchun.requesthandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.jchun.requesthandler.RequestService;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class RequestController {
     private RequestService requestService;
     // POST Method
     @PostMapping
-    public void addRequest(@ResponseBody Request request) {
+    public void addRequest(@RequestBody Request request) {
         requestService.saveRequest(request);
     }
     // GET Method
