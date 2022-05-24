@@ -28,37 +28,59 @@ const theme = createTheme({
             main: "#302f36",
             contrastText: "#fff",
         },
+        whi: {
+            main: "#ffffff",
+        },
     },
 });
 
 export default function Request() {
-    // States
+    // States for request attributes
     const [name, setName] = useState("");
     const [age, setAge] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [type, setType] = useState("");
+    // State for all of the requests in the database
+    const [requests, setRequests] = useState([]);
 
     // Function to handle the button click (send request data to database)
     const handleClick = async (e) => {
         e.preventDefault();
         const request = { type, name, email, age, message };
-        await fetch("http://localhost:8080/api/v1/request", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(request),
-        }).then(()=>{
-            console.log("student added!");
-        }).catch(err=>{
-            console.log("errmmm error + " + err);
-        });
+        try {
+            await fetch("http://localhost:8080/api/v1/request", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(request),
+            });
+            console.log("Request added");
+        } catch (e) {
+            console.log(e);
+        }
     };
+    // Function to fetch all of the requests from the database
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(
+                    "http://localhost:8080/api/v1/request"
+                );
+                const data = await response.json();
+                setRequests(data);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchData();
+    }, []);
 
     const paperStyle = {
         padding: "40px 20px 20px",
         width: "800px",
         margin: "80px auto",
     };
+
     return (
         <ThemeProvider theme={theme}>
             <Container>
@@ -70,7 +92,6 @@ export default function Request() {
                     <Typography
                         variant="h5"
                         component="a"
-                        href="/"
                         align="justify"
                         sx={{
                             mr: 4,
@@ -121,41 +142,49 @@ export default function Request() {
                             </FormHelperText>
                         </FormControl>
                         <TextField
-                            id="filled-basic"
+                            style={{
+                                background: "#606e7b",
+                            }}
+                            id="outlined-basic"
                             label="Name"
-                            variant="filled"
+                            variant="outlined"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             color="neutral"
-                            focused
                         />
                         <TextField
-                            id="filled-basic"
+                            style={{
+                                background: "#606e7b",
+                            }}
+                            id="outlined-basic"
                             label="Age"
-                            variant="filled"
+                            variant="outlined"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
                             color="neutral"
-                            focused
                         />
                         <TextField
-                            id="filled-basic"
+                            style={{
+                                background: "#606e7b",
+                            }}
+                            id="outlined-basic"
                             label="Email"
-                            variant="filled"
+                            variant="outlined"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             color="neutral"
-                            focused
                         />
                         <TextField
-                            id="filled-basic"
+                            style={{
+                                background: "#606e7b",
+                            }}
+                            id="outlined-basic"
                             label="Message"
-                            variant="filled"
+                            variant="outlined"
                             multiline
                             minRows={5}
                             maxRows={5}
                             color="neutral"
-                            focused
                             sx={{
                                 width: "150ch",
                             }}
@@ -173,7 +202,45 @@ export default function Request() {
                         </Button>
                     </Box>
                 </Paper>
+                {/* <Typography
+                    variant="h5"
+                    component="a"
+                    align="justify"
+                    sx={{
+                        mr: 4,
+                        fontFamily: "roboto",
+                        fontWeight: 800,
+                        letterSpacing: ".2rem",
+                        color: "black",
+                    }}
+                >
+                    SEE ALL REQUEST AND COMPLAINTS
+                </Typography> */}
             </Container>
+            {/* {requests.map((request) => (
+                <>
+                    <Typography
+                        variant="h5"
+                        component="a"
+                        align="justify"
+                        sx={{
+                            mr: 4,
+                            fontFamily: "roboto",
+                            fontWeight: 800,
+                            letterSpacing: ".2rem",
+                            color: "black",
+                        }}
+                    >
+                        {request.name}
+                        <br />
+                        {request.age}
+                        <br />
+                        {request.email}
+                        <br />
+                    </Typography>
+                    <br />
+                </>
+            ))} */}
         </ThemeProvider>
     );
 }
