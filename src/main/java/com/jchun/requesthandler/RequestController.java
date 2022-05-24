@@ -7,8 +7,8 @@ import com.jchun.requesthandler.RequestService;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping("api/v1/request")
+@CrossOrigin
 public class RequestController {
     @Autowired
     private RequestService requestService;
