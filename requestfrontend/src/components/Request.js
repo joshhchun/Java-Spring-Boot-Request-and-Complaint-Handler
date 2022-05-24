@@ -11,6 +11,13 @@ import {
     InputLabel,
     TextField,
     Box,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from "react";
@@ -34,6 +41,24 @@ const theme = createTheme({
     },
 });
 
+const columns = [
+    { id: "type", label: "Type", minWidth: 50, align: "left" },
+    { id: "name", label: "Name", minWidth: 50, align: "left" },
+    { id: "age", label: "Age", minWidth: 1, maxWidth: 5, align: "left" },
+    {
+        id: "email",
+        label: "Email",
+        minWidth: 100,
+        align: "left",
+    },
+    {
+        id: "message",
+        label: "Message",
+        minWidth: 300,
+        align: "left",
+    },
+];
+
 export default function Request() {
     // States for request attributes
     const [name, setName] = useState("");
@@ -41,6 +66,8 @@ export default function Request() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [type, setType] = useState("");
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
     // State for all of the requests in the database
     const [requests, setRequests] = useState([]);
 
@@ -74,9 +101,18 @@ export default function Request() {
         }
         fetchData();
     }, []);
+    // For the table
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+    // For the table
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
 
     const paperStyle = {
-        padding: "40px 20px 20px",
+        padding: "40px 30px 30px",
         width: "800px",
         margin: "80px auto",
     };
@@ -94,7 +130,7 @@ export default function Request() {
                         component="a"
                         align="justify"
                         sx={{
-                            mr: 4,
+                            mr: 1,
                             fontFamily: "roboto",
                             fontWeight: 800,
                             letterSpacing: ".2rem",
@@ -202,45 +238,110 @@ export default function Request() {
                         </Button>
                     </Box>
                 </Paper>
-                {/* <Typography
-                    variant="h5"
-                    component="a"
-                    align="justify"
-                    sx={{
-                        mr: 4,
-                        fontFamily: "roboto",
-                        fontWeight: 800,
-                        letterSpacing: ".2rem",
-                        color: "black",
-                    }}
-                >
-                    SEE ALL REQUEST AND COMPLAINTS
-                </Typography> */}
             </Container>
-            {/* {requests.map((request) => (
-                <>
+            <Container>
+                <Paper
+                    style={{
+                        padding: "70px 60px 30px",
+                        width: "800px",
+                        margin: "150px auto",
+                    }}
+                    elevation = {18}
+                    sx={{ backgroundColor: "lightslategray" }}
+                >
                     <Typography
                         variant="h5"
                         component="a"
                         align="justify"
+                        style = {{
+                            padding: "30px",
+                        }}
                         sx={{
                             mr: 4,
                             fontFamily: "roboto",
                             fontWeight: 800,
                             letterSpacing: ".2rem",
-                            color: "black",
+                            color: "white",
                         }}
                     >
-                        {request.name}
-                        <br />
-                        {request.age}
-                        <br />
-                        {request.email}
-                        <br />
+                        ALL REQUESTS AND COMPLAINTS
                     </Typography>
-                    <br />
-                </>
-            ))} */}
+                    <br/>
+                    <br/>
+                    <TableContainer
+                        sx={{
+                            maxHeight: 440,
+                            background: "#606e7b",
+                            margin: "10px",
+                        }}
+                    >
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            style={{
+                                                minWidth: column.minWidth,
+                                                background: "#302f36",
+                                                color: "white",
+                                            }}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {requests
+                                    .slice(
+                                        page * rowsPerPage,
+                                        page * rowsPerPage + rowsPerPage
+                                    )
+                                    .map((row) => {
+                                        return (
+                                            <TableRow
+                                                hover
+                                                role="checkbox"
+                                                tabIndex={-1}
+                                                key={row.code}
+                                            >
+                                                {columns.map((column) => {
+                                                    const value =
+                                                        row[column.id];
+                                                    return (
+                                                        <TableCell
+                                                            key={column.id}
+                                                            align={column.align}
+                                                        >
+                                                            {column.format &&
+                                                            typeof value ===
+                                                                "number"
+                                                                ? column.format(
+                                                                      value
+                                                                  )
+                                                                : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={requests.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Paper>
+            </Container>
         </ThemeProvider>
     );
 }
