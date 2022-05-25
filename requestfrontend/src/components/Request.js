@@ -71,6 +71,21 @@ export default function Request() {
     // State for all of the requests in the database
     const [requests, setRequests] = useState([]);
 
+    const ageHandler = (e) => {
+        // Handling if user does not input valid age
+        const { value } = e.target;
+        if (isNaN(value)) {
+            setAge("");
+        } else {
+            if (parseInt(value) > 150 || parseInt(value) < 0) {
+                alert(value + " is not a valida age. You must enter a valid age!");
+                setAge("")
+            }
+            else {
+                setAge(value);
+            }
+        }
+    }
     // Function to handle the button click (send request data to database)
     const handleClick = async (e) => {
         e.preventDefault();
@@ -196,7 +211,7 @@ export default function Request() {
                             label="Age"
                             variant="outlined"
                             value={age}
-                            onChange={(e) => setAge(e.target.value)}
+                            onChange= {ageHandler}
                             color="neutral"
                         />
                         <TextField
