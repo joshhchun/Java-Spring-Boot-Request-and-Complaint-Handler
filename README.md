@@ -1,5 +1,5 @@
 # Spring-Boot-RESTful-API
-A simple fullstack application built with Java Spring Boot, React, and PostgreSQL to handle a pesudo-company's requests and complaints from users.
+A simple fullstack application built with Java Spring Boot, Spring Data JPA, Hibernate, ReactJS, and PostgreSQL to handle a pesudo-company's requests and complaints from users.
 
 ## Posting a Request or a Complaint
 
@@ -21,8 +21,6 @@ Send a DELETE request to "/api/v1/request/{id}"
 <hr />
 
 # Additional info from my website: https://jchun.me/posts/tech/request-manager
-
-**Tech Stack** Java Spring Boot, Spring Data JPA, Hibernate, PostgreSQL, and ReactJS
 
 # Why and What?
 
