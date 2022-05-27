@@ -14,5 +14,6 @@ Refreshing the page will trigger a useEffect() React hook and render all of the 
 
 ## Removing a Request or Complaint
 
-Send a DELETE request to "/api/v1/request/{id}" 
+Send a DELETE request to "/api/v1/request/{id}"  
+
 `curl --request DELETE http://localhost:8080/api/v1/request/1`
